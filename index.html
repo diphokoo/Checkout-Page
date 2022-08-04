@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--style sheet-->
+  <link rel="stylesheet" href="stylesheet.css">
+  <!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<!-- FontAwesome CSS -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="script.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  <title>cart</title>
+</head>
+
+
+<script>
+  $(document).ready(function() {
+
+/* Set rates */
+var taxRate = 0.2;
+var fadeTime = 300;
+
+/* Assign actions */
+$('.pass-quantity input').change(function() {
+  updateQuantity(this);
+});
+
+
+    $('.remove-item span').click(function() {
+  removeItem(this);
+});
+
+
+/* Recalculate cart */
+function recalculateCart() {
+  var subtotal = 0;
+
+  /* Sum up row totals */
+  $('.item').each(function() {
+    subtotal += parseFloat($(this).children('.product-line-price').text());
+  });
+
+  /* Calculate totals */
+  var tax = subtotal * taxRate;
+  var shipping = 15;
+  var total = subtotal + tax + shipping;
+  
+  /*No items*/
+
+  if(total <= 15){
+    $('#noItems').show();
+  }
+  /*shipping info*/
+
+  if(total >= 150){
+    $('.shipping').hide()
+    $('.noShippingCost').show();
+    total = total - 15;
+  }
+
+  /* Update totals display */
+  $('.totals-value').fadeOut(fadeTime, function() {
+    $('#cart-subtotal').html(subtotal.toFixed(2));
+    $('#cart-tax').html(tax.toFixed(2));
+    $('.cart-total').html(total.toFixed(2));
+    if (total == 0) {
+      $('.checkout').fadeOut(fadeTime);
+    } else {
+      $('.checkout').fadeIn(fadeTime);
+    }
+    $('.totals-value').fadeIn(fadeTime);
+  });
+}
+
+
+/* Update quantity */
+function updateQuantity(quantityInput) {
+  /* Calculate line price */
+  var productRow = $(quantityInput).parent().parent();
+  var price = parseFloat(productRow.children('.product-price').text());
+  var quantity = $(quantityInput).val();
+  var linePrice = price * quantity;
+
+  /* Update line price display and recalc cart totals */
+  productRow.children('.product-line-price').each(function() {
+    $(this).fadeOut(fadeTime, function() {
+      $(this).text(linePrice.toFixed(2));
+      recalculateCart();
+      $(this).fadeIn(fadeTime);
+    });
+  });
+}
+
+/* Remove item from cart */
+function removeItem(removeButton) {
+  /* Remove row from DOM and recalc cart total */
+  var productRow = $(removeButton).parent().parent();
+  productRow.slideUp(fadeTime, function() {
+    productRow.remove();
+    recalculateCart();
+  });
+}
+
+  /* trigger successful msg */
+  $("#buyNow").click(function(){
+    $("#shoppingCart").hide();
+    $(".successfulMsg").show();
+  });
+});  
+</script>
+<body>
+  <div class="bg-image"></div>
+  <dic class="logo d-none d-sm-block position-absolute bottom-0 end-0">
+    <img src="assets/logo.png " id="logo">
+  </dic>
+
+  <div class="container mt-5 mb-5">
+      <div class="row justify-content-center" id="shoppingCart">
+        <div class="col-xl-4">
+          <div class="border border-gainsboro mt-3 clearfix" id="items">
+            <div class="border-bottom bg-light basket">Basket</div>
+              <div id="noItems">
+                There is no products in your basket.
+              </div>
+              <div class="item border-bottom">
+                <div class="product-price d-none">24</div>
+                <div class="pass-quantity col-lg-3 col-md-4 col-sm-3">
+                  <label for="pass-quantity" class="pass-quantity"></label>
+                  <input class="form-control" type="number" value="1" min="1">
+                </div>
+                <div class="col-lg-4 productName pt-4">Product A</div>
+                <div class="col-lg-1 product-line-price pt-4">
+                  <span class="product-line-price">24.00</span>
+                </div>
+                <div class="remove-item pt-4">
+                  <span class="remove-product btn-lightt">
+                    Delete
+                  </span>
+                </div>
+              </div>
+
+              <div class="item border-bottom">
+                <div class="product-price d-none">19.99</div>
+                <div class="pass-quantity col-lg-3 col-md-4 col-sm-3">
+                  <label for="pass-quantity" class="pass-quantity"></label>
+                  <input class="form-control" type="number" value="1" min="1">
+                </div>
+                <div class="col-lg-4 productName pt-4">Product A</div>
+                <div class="col-lg-1 product-line-price pt-4">
+                  <span class="product-line-price">19.99</span>
+                </div>
+                <div class="remove-item pt-4">
+                  <span class="remove-product btn-lightt">
+                    Delete
+                  </span>
+                </div>
+              </div>
+
+              <div class="item border-bottom">
+                <div class="product-price d-none">29.95</div>
+                <div class="pass-quantity col-lg-3 col-md-4 col-sm-3">
+                  <label for="pass-quantity" class="pass-quantity"></label>
+                  <input class="form-control" type="number" value="1" min="1">
+                </div>
+                <div class="col-lg-4 productName pt-4">Product A</div>
+                <div class="col-lg-1 product-line-price pt-4">
+                  <span class="product-line-price">29.95</span>
+                </div>
+                <div class="remove-item pt-4">
+                  <span class="remove-product btn-lightt">
+                    Delete
+                  </span>
+                </div>
+              </div>
+          </div>
+    <!-- item -->
+        </div>
+    
+        <div class="col-xl-3 col-lg-4 col-md-5 totals">
+          <div class="border border-gainsboro px-3">
+            <div class="border-bottom border-gainsboro">
+              <p class="mb-0 py-3"><strong>Order Summary</strong></p>
+            </div>
+            <div class="totals-item d-flex align-items-center justify-content-between border-bottom bg-light">
+              <p class="mt-3">Items</p>
+              <p class="totals-value mt-3" id="cart-subtotal">106.96</p>
+            </div>
+            <div class="totals-item d-flex align-items-center justify-content-between border-bottom">
+              <p class="mt-3">Tax</p>
+              <p class="totals-value mt-3" id="cart-tax">15.24</p>
+            </div>
+            <div class="totals-item d-flex align-items-center justify-content-between bg-light shippping">
+              <p class="mt-3">Shippping</p>
+              <p class="totals-value mt-3" id="shippping">15</p>
+            </div>
+            <div id="noShippingCost">            
+              <div class="totals-item d-flex align-items-center justify-content-between bg-light">
+                <p class="mt-3">Shippping</p>
+                <p class="totals-value mt-3" id="shippping">0</p>
+              </div>
+            </div>
+            <div class="totals-item totals-item-total d-flex align-items-center justify-content-between pt-3 border-top border-gainsboro">
+              <p class="mt-3"><strong>Sub total</strong></p>
+              <p class="totals-value font-weight-bold cart-total mt-3">137.94</p>
+              <br>
+            </div>
+            <div class="totals-item d-flex align-items-center justify-content-between bg-light">
+              <button type="button" class="btn btn-warning text-center me-2" id="buyNow">Buy Now</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert alert-success col-md-6 offset-md-3 successfulMsg" role="alert">
+        Thanks for shopping with us!
+      </div>
+
+  </div><!-- container -->
+
+</body>
+</html>

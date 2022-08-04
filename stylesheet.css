@@ -1,0 +1,119 @@
+.bg-image {
+  position: fixed;
+  left: 0;
+  right: 0;
+  display: block;
+  background-image: url(assets/bg.jpg);
+  /* height: 27%; */
+  margin-top: -4%;
+  height: 103vh;
+  -webkit-filter: blur(5px);
+  -moz-filter: blur(5px);
+  -o-filter: blur(5px);
+  -ms-filter: blur(5px);
+  filter: blur(5px);
+ 
+}
+
+.logo{
+position: fixed;
+display: block;  
+margin-left: 168vh;
+margin-top: 84vh;
+}
+
+
+.item {
+display: flex;
+align-items: center;
+flex-wrap: wrap;
+}
+
+
+.totals-value::before{
+content: ' \00A3';  
+}
+
+
+.remove-item.pt-4 {
+  /* top: -25%; */
+  /* margin-right: -50px; */
+  padding-left: 84%;
+  margin-top: -11%;
+}
+
+.col-lg-1.product-line-price.pt-4 {
+  padding-left: 26%;
+}
+
+
+.remove-product.btn-lightt{
+text-decoration: underline blue;
+cursor: pointer;
+}
+
+span.product-line-price.price {
+  /* padding-left: 12px; */
+  /* margin-right: 20%; */
+  background-color: deepskyblue;
+  /* margin: 29%; */
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.basket {
+  margin-left: 14px;
+  font-weight: bold;
+  padding: 5px;
+}
+
+div#items {
+  border-radius: 2%;
+  background-color: white;
+
+}
+
+.border-bottom.bg-light.basket {
+  border-radius: 9%;
+  background-color: white;
+}
+
+.border.border-gainsboro.px-3 {
+  border-radius: 2%;
+  background-color: white;
+}
+p.totals-value.font-weight-bold.cart-total.mt-3 {
+  margin-left: 40%;
+}
+
+button.btn.btn-warning {
+  /* margin-right: 52%; */
+  padding-right: 134px;
+  margin-left: 3%;
+}
+
+.successfulMsg{
+  display: none;
+  text-align: center;
+}
+
+.alert.alert-success.col-md-6.offset-md-3.successfulMsg {
+margin-top: 6%;
+}
+
+#noItems{
+display: none;
+}
+
+div#noItems {
+  margin-left: 16px;
+  padding: 10px;
+}
+
+div#noShippingCost{
+display: none;
+}
+
+.container.mt-5.mb-5 {
+  padding-top: 15%;
+}
